@@ -156,8 +156,8 @@ window.getGeneratingDraftPosition = function () {
   }
   var documnetEditorRect = documnetEditor.getBoundingClientRect();
   var documnetEditorTop = documnetEditorRect.top;
-  var documnetEditorLeft = documnetEditorRect.left;
-  var x = aiButtonLeft - documnetEditorLeft;
+  var sampleMargin = 8;
+  var x = aiButtonLeft - sampleMargin;
   var y = aiButtonTop - documnetEditorTop;
   return { x: x, y: y };
 }
