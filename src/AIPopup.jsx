@@ -75,7 +75,6 @@ function highlightDifferences(original, modified) {
 }
 
 export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistInitialPos, isAIEnabled }) {
-  const [visible, setVisible] = useState(false);
   const [isSmartEditor, setIsSmartEditor] = useState(false);
   const [popupType, setPopupType] = useState('');
   const [tone, setTone] = useState('Professional');
@@ -99,7 +98,6 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
   const [draftRange, setDraftRange] = useState({ start: null, end: null });
   const [stopVisible, setStopVisible] = useState(false);
   const [stopPos, setStopPos] = useState({ x: 0, y: 0 });
-  const requestRef = useRef(0);
   const canceledRef = useRef(false);
   const gearHeaderRef = useRef(null);
   const cmSettingsRef = useRef(null);
@@ -110,7 +108,6 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
   const [viewerHost, setViewerHost] = useState(null);
   const [fabChatVisible, setFabChatVisible] = useState(false);
   const [fabAssistVisible, setFabAssistVisible] = useState(false);
-  const AI = useMemo(() => window.AIBrowser || {}, []);
 
   const [assistBtn, setAssistBtn] = useState({
     left: 80,
@@ -524,11 +521,6 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
     return 'AI Assistant';
   }, [popupType]);
 
-  useEffect(() => {
-    const pos = window.getAIAssistPopupPosition ? window.getAIAssistPopupPosition() : { x: 200, y: 160 };
-    setDialogPos({ x: String(Math.round(pos.x)), y: String(Math.round(pos.y)) });
-  }, [visible]);
-
   const openHeaderSettingsMenu = () => {
     const btn = gearHeaderRef.current;
     if (!btn || !cmSettingsRef.current) return;
@@ -743,7 +735,7 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
       setTimeout(() => {
         try {
           const selText = editorRef?.current?.documentEditor?.selection?.text || '';
-          if(!!selText && selText.trim().length > 0) {
+          if (!!selText && selText.trim().length > 0) {
             setIsSmartEditor(true);
             assistFabRef.title = 'Refine the content';
           }
@@ -997,6 +989,12 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
                   type='text'
                   onFocus={floatFocus}
                   onBlur={floatBlur}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && userPrompt?.trim()) {
+                      e.preventDefault();
+                      onSend();
+                    }
+                  }}
                 />
               </div>
               <DropDownButtonComponent

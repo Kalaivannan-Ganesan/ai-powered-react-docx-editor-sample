@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { DocumentEditorContainerComponent, Ribbon, Toolbar } from '@syncfusion/ej2-react-documenteditor';
+import { DocumentEditorContainerComponent, Ribbon } from '@syncfusion/ej2-react-documenteditor';
 import { TitleBar } from './title-bar.jsx';
 import { UploaderComponent } from '@syncfusion/ej2-react-inputs';
 import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import { AIAssistViewComponent, ViewsDirective, ViewDirective } from '@syncfusion/ej2-react-interactive-chat';
-import { getDocumentText, getSuggestions } from './summarizer';
+import { getDocumentText } from './summarizer';
 import AIPopup from './AIPopup.jsx';
 import './editor-helpers.js';
 import './App.css';
@@ -25,63 +25,11 @@ const SERVICE_URL = 'https://document.syncfusion.com/web-services/docx-editor/ap
 const UPLOADER_SAVE_URL = 'https://services.syncfusion.com/react/production/api/FileUploader/Save';
 const UPLOADER_REMOVE_URL = 'https://services.syncfusion.com/react/production/api/FileUploader/Remove';
 
-const FooterBar = React.memo(function FooterBar() {
-  return (
-    <div className="footer">
-      <div className="footer-container">
-        <div className="docx-icon">
-          <img
-            className="footer-logo"
-            src="https://static.syncfusion.com/wp-content/free-tools/online-ai-docx-editor-free/online-docx-editor/icons/DOCX-Icon.svg"
-            alt="DOCX Icon"
-          />
-        </div>
-        <div className="footer-content">
-          <div className="title">
-            <span>Want a Word-style editor in your app?</span>
-            <span>
-              <strong className="main-title"> Try our DOCX Editor SDK </strong>
-              — create, edit, and collaborate!
-            </span>
-          </div>
-          <div className="buttons">
-            <button
-              type="button"
-              className="e-trial-btn e-btn e-primary e-icons"
-              onClick={() =>
-                window.open(
-                  'https://www.syncfusion.com/downloads/docx-editor-sdk?tag=es-freetools-docx-editor-sample-trial-promotion',
-                  '_blank'
-                )
-              }
-            >
-              Try Now
-            </button>
-            <button
-              type="button"
-              className="e-demo-btn e-btn"
-              onClick={() =>
-                window.open(
-                  'https://www.syncfusion.com/request-demo?tag=es-freetools-docx-editor-sample-demo-promotion',
-                  '_blank'
-                )
-              }
-            >
-              Request Demo
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-});
-
 export const App = () => {
   let container = useRef(null);
   const uploaderRef = useRef(null);
   let titleBar;
   let documentName = "New Document";
-  const FOOTER_HEIGHT = 72;
   const assistInstance = useRef(null);
   const [initialized, setInitialized] = useState(false);
   const [openChat, setOpenChat] = useState(false);
@@ -188,17 +136,6 @@ export const App = () => {
     spellChecker.languageID = 1033;
     spellChecker.removeUnderline = false;
     spellChecker.allowSpellCheckAndSuggestion = true;
-    const ribbon = container.current?.ribbon;
-    if (ribbon) {
-      ribbon.ribbon.helpPaneVisible = true;
-      ribbon.ribbon.helpPaneTemplate = `
-        <div class="help-pane-content">
-          <img class="syncfusion-logo" src="https://static.syncfusion.com/wp-content/free-tools/online-ai-docx-editor-free/online-docx-editor/icons/Syncfusion-Logo.svg" />
-          Powered by&nbsp;
-          <a class="free-tools-sample-explore-btn" href="https://www.syncfusion.com/docx-editor-sdk" target="_blank">Syncfusion DOCX Editor SDK</a>
-        </div>
-      `;
-    }
     window.addEventListener('resize', onResize);
   }, []);
 
@@ -270,7 +207,6 @@ export const App = () => {
       const itemClass = String(args?.item?.iconCss || '');
       if (itemClass.includes('e-close')) {
         setOpenChat(false);
-        document.querySelector('.e-ribbon-help-template')?.classList.remove('e-hide');
         document.querySelector('.e-fab.ai-assist-btn')?.classList.remove('e-hide');
         document.querySelector('.document-editor-container')?.classList.remove('e-hide');
       }
@@ -315,7 +251,7 @@ export const App = () => {
                 <div id='documenteditor_titlebar' className="e-de-ctn-title"></div>
               </div>
               <div id='document-editor-page'>
-                <div id='documentEditorDiv' className='document-editor-container' style={{ height: `calc(100vh - (45px + ${FOOTER_HEIGHT}px))`, width: openChat ? '65%' : '100%', float: 'left' }}>
+                <div id='documentEditorDiv' className='document-editor-container' style={{ height: `calc(100vh - 53px)`, width: openChat ? '65%' : '100%', float: 'left' }}>
                   <DocumentEditorContainerComponent
                     id="document-editor"
                     ref={container}
@@ -334,7 +270,7 @@ export const App = () => {
                     style={{
                       width: '35%',
                       float: 'right',
-                      height: `calc(100vh - (45px + ${FOOTER_HEIGHT}px))`,
+                      height: `calc(100vh - 53px)`,
                       position: 'relative',
                       display: 'block'
                     }}
@@ -454,7 +390,6 @@ export const App = () => {
                   </div>
                 )}
               </div>
-              <FooterBar />
             </div>
           )}
         </div>
