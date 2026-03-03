@@ -1,12 +1,12 @@
-# ai-powered-docx-editor-sample
+# ai-powered-react-docx-editor-sample
 A sample project showcasing the DOCX Editor with AI assistance for generating, refining, and summarizing content.
 
 ## Getting Started
 
-To get started, clone the `ai-powered-docx-editor-sample` repository.
+To get started, clone the `ai-powered-react-docx-editor-sample` repository.
 
 ```
-git clone https://github.com/SyncfusionExamples/ai-powered-docx-editor-sample.git
+git clone https://github.com/SyncfusionExamples/ai-powered-react-docx-editor-sample.git
 ```
 
 ## Installation
