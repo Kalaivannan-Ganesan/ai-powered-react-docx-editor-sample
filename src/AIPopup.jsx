@@ -172,7 +172,6 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
     const toneValue = String(tone).toLowerCase();
     const formatValue = String(format).toLowerCase();
     const lengthValue = String(length).toLowerCase();
-    const hint = (userHint || '').trim();
     switch (task) {
       case 'Generate': {
         const currentResult = getSelectionText();
@@ -333,12 +332,6 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
     try {
       return (editorRef?.current?.documentEditor?.selection?.text || '').trim();
     } catch { return ''; }
-  };
-
-  const insertPlainText = async (html) => {
-    const text = (html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-    try { editorRef?.current?.documentEditor?.editor?.insertText(text); }
-    catch (e) { alert('Insert failed: ' + e.message); }
   };
 
   const replaceSelectionWithPlainText = async (html) => {
@@ -525,18 +518,6 @@ export default function AIPopup({ editorRef, onShowChatPane, chatOpen, assistIni
     const btn = gearHeaderRef.current;
     if (!btn || !cmSettingsRef.current) return;
     openMenuBesideButton(btn, cmSettingsRef);
-  };
-
-  const markChecks = (items) => {
-    const hit = (id) =>
-      id.includes(tone.toLowerCase()) ||
-      id.includes(format.toLowerCase().replace(/\s+/g, '-')) ||
-      id.includes(length.toLowerCase());
-    items.forEach(i => {
-      const isChild = i.id?.includes('child');
-      i.iconCss = (isChild && hit(i.id)) ? 'e-icons e-check' : '';
-      if (i.items) markChecks(i.items);
-    });
   };
 
   const UpdateIconCss = (items) => {
