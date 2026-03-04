@@ -329,7 +329,7 @@
 }
 
 .ai-settings-menu ul {
- z-index: 200000 !important;
+ z-index: 1000000005 !important;
 }
 
 .e-ribbon-help-template.e-hide {
