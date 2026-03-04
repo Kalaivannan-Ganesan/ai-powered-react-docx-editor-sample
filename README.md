@@ -19,7 +19,7 @@ npm install
 
 ## License Registration
 
-Before using the Syncfusion Docx Editor, register your license key in the `src/index.tsx` file:
+Before using the Syncfusion DOCX Editor, register your license key in the `src/index.tsx` file:
 
 ```
 import { registerLicense } from '@syncfusion/ej2-base';
@@ -68,4 +68,4 @@ To run the application, use the following npm script:
 npm start
 ```
 
-This command will start the Docx Editor and open it in your default web browser.
+This command will start the DOCX Editor and open it in your default web browser.
