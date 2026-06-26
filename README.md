@@ -1,5 +1,6 @@
-# ai-powered-react-docx-editor-sample
-A sample project showcasing the DOCX Editor with AI assistance for generating, refining, and summarizing content.
+# AI-Powered React DOCX Editor (Document Editor) sample
+
+A sample project showcasing the [React DOCX Editor](https://www.syncfusion.com/docx-editor-sdk/react-docx-editor?utm_source=github&utm_medium=listing&utm_campaign=github-github-documenteditor-examples) (Document Editor) with AI assistance for generating, refining, and summarizing content.
 
 ## Getting Started
 
